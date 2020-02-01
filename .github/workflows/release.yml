@@ -54,7 +54,7 @@ jobs:
 
       - name: Maven It Tests
         working-directory: ./docker-actions/
-        run: ./mvnw -B test
+        run: ./mvnw -B integration-test -Dit.only
 
       - name: Maven Release Perform
         working-directory: ./docker-actions/

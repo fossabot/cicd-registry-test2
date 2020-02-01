@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: TEST
-        run: echo "%%%%%%%%%%%%%%%%%%%%%% ${CCLOUD_ACTION_OWNER} %%%%%%%%%%%%%%%%%%%%%%"
-
       - name: Checkout CCloud Registry Actions
         uses: actions/checkout@v1
 
@@ -33,7 +30,7 @@ jobs:
 
       - name: Maven It Tests
         working-directory: ./docker-actions/
-        run: ./mvnw -B test
+        run: ./mvnw -B integration-test -Dit.only
 
       - name: Maven Deploy Jar Archive
         working-directory: ./docker-actions/
