@@ -1,0 +1,75 @@
+name: Release Workflow
+
+on:
+  push:
+    branches:
+      - 'release/**'
+
+jobs:
+  release:
+    name: Release Workflow Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Prepare Git Operations
+        run: |
+          git config --global user.name Github Action
+          git config --global user.email actions@github.com
+
+      - name: Checkout CCloud Registry Actions
+        uses: actions/checkout@v1
+
+      - name: Set Release Version
+        shell: bash
+        id: release_step
+        run: |
+          echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=version::$(echo ${GITHUB_REF#refs/heads/} | awk -F / '{print $2}')"
+
+      - name: Checkout CCloud Registry Actions's HEAD^
+        run: git checkout ${{ steps.release_step.outputs.branch }}
+
+      - name: Maven settings configuration
+        env:
+          CCLOUD_ACTION_TOKEN: ${{ secrets.CCLOUD_ACTION_TOKEN }}
+        run: |
+          envsubst < .github/settings.template.xml > settings.xml
+          git remote add github https://LmDiv:${CCLOUD_ACTION_TOKEN}@github.com/LmDiv/cicd-ccloud-action.git
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Maven Release Prepare
+        working-directory: ./docker-actions/
+        run: |
+          ./mvnw -B -s ../settings.xml \
+          -Darguments="-DskipTests" release:prepare \
+          -DreleaseVersion=${{ steps.release_step.outputs.version }}
+
+      - name: Maven Unit Tests
+        working-directory: ./docker-actions/
+        run: ./mvnw -B test
+
+      - name: Maven It Tests
+        working-directory: ./docker-actions/
+        run: ./mvnw -B test
+
+      - name: Maven Release Perform
+        working-directory: ./docker-actions/
+        run: ./mvnw -B -s ../settings.xml -Darguments="-DskipTests" release:perform
+
+      - name: Checkout CCloud Registry Actions Master
+        uses: actions/checkout@v1
+        with:
+          ref: master
+
+      - name: Checkout CCloud Registry Actions Master's HEAD^
+        run: git checkout master
+
+      - name: Merge branch ${{ steps.release_step.outputs.branch }} into master
+        run: |
+          git merge ${{ steps.release_step.outputs.branch }}
+          git push github master
+          git push github --tags
