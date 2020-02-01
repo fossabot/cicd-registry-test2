@@ -10,7 +10,7 @@
     <servers>
         <server>
             <id>github</id>
-            <username>LmDiv</username>
+            <username>${CCLOUD_ACTION_OWNER}</username>
             <password>${CCLOUD_ACTION_TOKEN}</password>
         </server>
     </servers>
@@ -19,7 +19,7 @@
         <profile>
             <id>github</id>
             <properties>
-                <docker.auth.username>LmDiv</docker.auth.username>
+                <docker.auth.username>${CCLOUD_ACTION_OWNER}</docker.auth.username>
                 <docker.auth.password>${CCLOUD_ACTION_TOKEN}</docker.auth.password>
             </properties>
             <repositories>
