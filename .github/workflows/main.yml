@@ -17,9 +17,8 @@ jobs:
       - name: Maven settings configuration
         env:
           CCLOUD_ACTION_TOKEN: ${{ secrets.CCLOUD_ACTION_TOKEN }}
-        run: |
-          export CCLOUD_ACTION_OWNER=$(echo ${{ github.repository }} | awk -F / '{print $2}')
-          envsubst < .github/settings.template.xml > settings.xml
+          CCLOUD_ACTION_OWNER: $(echo ${{ github.repository }} | awk -F / '{print tolower($1)}')
+        run: envsubst < .github/settings.template.xml > settings.xml
 
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
@@ -30,16 +29,16 @@ jobs:
         working-directory: ./docker-actions/
         run: ./mvnw -B test
 
-      - name: Maven It Tests
-        working-directory: ./docker-actions/
-        run: ./mvnw -B integration-test -Dit.only
-
       - uses: codecov/codecov-action@v1.0.5
         name: Upload test coverage
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./docker-actions/target/site/jacoco/jacoco.xml
           flags: unittests
+
+      - name: Maven It Tests
+        working-directory: ./docker-actions/
+        run: ./mvnw -B integration-test -Dit.only
 
       - name: Maven Deploy Jar Archive
         working-directory: ./docker-actions/
