@@ -4,12 +4,18 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 MASTER=$(git rev-parse origin/master)
 CURRENT=$(git rev-parse ${BRANCH})
 
+echo "BRANCH: ${BRANCH}"
+echo "MASTER: ${MASTER}"
+echo "CURRENT: ${CURRENT}"
+
 if [[ ${MASTER} != ${CURRENT} ]];then
   echo "ERROR - The release branch is not up to date with master" 1>&2
   exit 1
 fi
 
 VERSION=$(echo ${BRANCH} | awk -F / '{print $2}')
+
+echo "VERSION: ${VERSION}"
 
 if [[ ${VERSION} =~ ^[0-9]+.[0-9]+.[0-9]+$ ]];then
     sleep 0

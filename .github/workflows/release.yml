@@ -21,12 +21,12 @@ jobs:
 
       - name: Set Release Version
         working-directory: ./docker-actions/
-        id: release_step
         shell: bash
+        id: release
         run: ../.github/validate-release.sh
 
       - name: Checkout CCloud Registry Actions's HEAD^
-        run: git checkout ${{ steps.release_step.outputs.branch }}
+        run: git checkout ${{ steps.release.outputs.branch }}
 
       - name: Maven settings configuration
         env:
@@ -47,7 +47,7 @@ jobs:
         run: |
           ./mvnw -B -s ../settings.xml \
           -Darguments="-DskipTests" release:prepare \
-          -DreleaseVersion=${{ steps.release_step.outputs.version }}
+          -DreleaseVersion=${{ steps.release.outputs.version }}
 
       - name: Maven Unit Tests
         working-directory: ./docker-actions/
@@ -71,6 +71,6 @@ jobs:
 
       - name: Merge release branch into master
         run: |
-          git merge ${{ steps.release_step.outputs.branch }}
+          git merge ${{ steps.release.outputs.branch }}
           git push github master
           git push github --tags
