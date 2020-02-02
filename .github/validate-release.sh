@@ -2,7 +2,7 @@
 
 BRANCH=$(echo ${GITHUB_REF#refs/heads/})
 MASTER=$(git rev-parse origin/master)
-CURRENT=$(git rev-parse ${BRANCH})
+CURRENT=$(git rev-parse origin/${BRANCH})
 
 echo "BRANCH: ${BRANCH}"
 echo "MASTER: ${MASTER}"
