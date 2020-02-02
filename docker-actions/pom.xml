@@ -285,6 +285,7 @@
                 <configuration>
                     <excludes>
                         <exclude>fr/xebia/ldi/Validation.*</exclude>
+                        <exclude>fr/xebia/ldi/error/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
