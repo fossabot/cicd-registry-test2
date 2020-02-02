@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
+BRANCH=$(echo ${GITHUB_REF#refs/heads/})
 MASTER=$(git rev-parse origin/master)
 CURRENT=$(git rev-parse ${BRANCH})
 
