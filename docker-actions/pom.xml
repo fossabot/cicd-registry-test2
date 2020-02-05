@@ -28,8 +28,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <gcr.json.key />
         <action.owner />
+        <dockerhub.password />
         <docker.auth.username />
         <docker.auth.password />
         <docker.url>docker.pkg.github.com</docker.url>
@@ -281,14 +281,14 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>jib-gcr</id>
+                        <id>jib-dockerhub</id>
                         <configuration>
                             <to>
                                 <auth>
-                                    <username>_json_key</username>
-                                    <password>${gcr.json.key}</password>
+                                    <username>loicmdivad</username>
+                                    <password>${dockerhub.password}</password>
                                 </auth>
-                                <image>gcr.io/loicmdivad/cicd-registry-test2</image>
+                                <image>loicmdivad/cicd-registry-test2</image>
                                 <tags>
                                     <tag>latest</tag>
                                 </tags>
