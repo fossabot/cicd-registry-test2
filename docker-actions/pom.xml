@@ -33,7 +33,7 @@
         <docker.auth.username />
         <docker.auth.password />
         <docker.url>docker.pkg.github.com</docker.url>
-        <docker.repo>${action.owner}/cicd-registry-test2</docker.repo>
+        <docker.repo>${action.owner}/${project.artifactId}</docker.repo>
         <docker.image.name>${project.artifactId}</docker.image.name>
         <docker.image.url>${docker.url}/${docker.repo}/${docker.image.name}:${project.version}</docker.image.url>
 
@@ -152,6 +152,32 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>github-docker</id>
+            <properties>
+                <jib.target>${docker.image.url}</jib.target>
+                <jib.user>${docker.auth.username}</jib.user>
+                <jib.pass>${docker.auth.password}</jib.pass>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>hub-docker</id>
+            <properties>
+                <jib.target>loicmdivad/${project.artifactId}</jib.target>
+                <jib.user>loicmdivad</jib.user>
+                <jib.pass>${dockerhub.password}</jib.pass>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
@@ -264,38 +290,18 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib.plugin.version}</version>
-                <executions>
-<!--                    <execution>
-                        <id>jib-github</id>
-                        <configuration>
-                            <to>
-                                <auth>
-                                    <username>${docker.auth.username}</username>
-                                    <password>${docker.auth.password}</password>
-                                </auth>
-                                <image>${docker.image.url}</image>
-                                <tags>
-                                    <tag>latest</tag>
-                                </tags>
-                            </to>
-                        </configuration>
-                    </execution>-->
-                    <execution>
-                        <id>jib-dockerhub</id>
-                        <configuration>
-                            <to>
-                                <auth>
-                                    <username>loicmdivad</username>
-                                    <password>${dockerhub.password}</password>
-                                </auth>
-                                <image>loicmdivad/cicd-registry-test2</image>
-                                <tags>
-                                    <tag>latest</tag>
-                                </tags>
-                            </to>
-                        </configuration>
-                    </execution>
-                </executions>
+                <configuration>
+                    <to>
+                        <auth>
+                            <username></username>
+                            <password></password>
+                        </auth>
+                        <image></image>
+                        <tags>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                </configuration>
             </plugin>
 
             <plugin>
