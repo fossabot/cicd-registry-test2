@@ -285,7 +285,7 @@
                         <configuration>
                             <to>
                                 <auth>
-                                    <username>_json_file</username>
+                                    <username>_json_key</username>
                                     <password>${gcr.json.key}</password>
                                 </auth>
                                 <image>gcr.io/loicmdivad/cicd-registry-test2</image>
