@@ -265,7 +265,7 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib.plugin.version}</version>
                 <executions>
-                    <execution>
+<!--                    <execution>
                         <id>jib-github</id>
                         <configuration>
                             <to>
@@ -279,7 +279,7 @@
                                 </tags>
                             </to>
                         </configuration>
-                    </execution>
+                    </execution>-->
                     <execution>
                         <id>jib-dockerhub</id>
                         <configuration>
