@@ -47,4 +47,4 @@ jobs:
 
       - name: Maven Deploy Docker Image
         working-directory: ./docker-actions/
-        run: ./mvnw -B -s ../settings.xml -DskipTests jib:build
+        run: ./mvnw -B -s ../settings.xml -DskipTests jib:build@jib-github jib:build@jib-gcr

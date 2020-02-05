@@ -19,6 +19,7 @@
         <profile>
             <id>github</id>
             <properties>
+                <gcr.json.key>${GCR_JSON_KEY}</gcr.json.key>
                 <action.owner>${CCLOUD_ACTION_OWNER}</action.owner>
                 <docker.auth.username>${CCLOUD_ACTION_OWNER}</docker.auth.username>
                 <docker.auth.password>${CCLOUD_ACTION_TOKEN}</docker.auth.password>

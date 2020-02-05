@@ -27,12 +27,6 @@ jobs:
         working-directory: ./docker-actions/
         run: ./mvnw -B test
 
-      - uses: codecov/codecov-action@v1.0.5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} #required
-          file: ./docker-actions/target/site/jacoco/jacoco.xml
-          flags: unittests #optional
-
       - name: Maven It Tests
         working-directory: ./docker-actions/
         run: ./mvnw -B integration-test -Dit.only

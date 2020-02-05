@@ -28,6 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <gcr.json.key />
         <action.owner />
         <docker.auth.username />
         <docker.auth.password />
@@ -250,7 +251,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
                 <configuration>
-                    <goals>deploy jib:build</goals>
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
@@ -264,18 +264,38 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib.plugin.version}</version>
-                <configuration>
-                    <to>
-                        <auth>
-                            <username>${docker.auth.username}</username>
-                            <password>${docker.auth.password}</password>
-                        </auth>
-                        <image>${docker.image.url}</image>
-                        <tags>
-                            <tag>latest</tag>
-                        </tags>
-                    </to>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>jib-github</id>
+                        <configuration>
+                            <to>
+                                <auth>
+                                    <username>${docker.auth.username}</username>
+                                    <password>${docker.auth.password}</password>
+                                </auth>
+                                <image>${docker.image.url}</image>
+                                <tags>
+                                    <tag>latest</tag>
+                                </tags>
+                            </to>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>jib-gcr</id>
+                        <configuration>
+                            <to>
+                                <auth>
+                                    <username>_json_file</username>
+                                    <password>${gcr.json.key}</password>
+                                </auth>
+                                <image>gcr.io/loicmdivad/cicd-registry-test2</image>
+                                <tags>
+                                    <tag>latest</tag>
+                                </tags>
+                            </to>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -303,6 +323,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 </project>
