@@ -293,10 +293,10 @@
                 <configuration>
                     <to>
                         <auth>
-                            <username></username>
-                            <password></password>
+                            <username>${jib.user}</username>
+                            <password>${jib.pass}</password>
                         </auth>
-                        <image></image>
+                        <image>${jib.target}</image>
                         <tags>
                             <tag>latest</tag>
                         </tags>
