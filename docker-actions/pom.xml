@@ -33,7 +33,7 @@
         <docker.auth.username />
         <docker.auth.password />
         <docker.url>docker.pkg.github.com</docker.url>
-        <docker.repo>${action.owner}/${project.artifactId}</docker.repo>
+        <docker.repo>${action.owner}/cicd-registry-test2</docker.repo>
         <docker.image.name>${project.artifactId}</docker.image.name>
         <docker.image.url>${docker.url}/${docker.repo}/${docker.image.name}:${project.version}</docker.image.url>
 
