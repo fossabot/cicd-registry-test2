@@ -153,7 +153,7 @@
     </dependencies>
 
     <profiles>
-        <profile>
+        <!--<profile>
             <id>github-docker</id>
             <properties>
                 <jib.target>${docker.image.url}</jib.target>
@@ -163,7 +163,7 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-        </profile>
+        </profile>-->
         <profile>
             <id>hub-docker</id>
             <properties>
@@ -290,7 +290,7 @@
                 <configuration>
                     <to>
                         <auth>
-                            <username>${jib.user}</username>
+                            <username>${jib.pass}</username>
                             <password>${jib.pass}</password>
                         </auth>
                         <image>${jib.target}</image>
