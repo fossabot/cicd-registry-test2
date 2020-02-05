@@ -167,13 +167,10 @@
         <profile>
             <id>hub-docker</id>
             <properties>
-                <jib.target>loicmdivad/${project.artifactId}</jib.target>
+                <jib.target>loicmdivad/cicd-registry-test2</jib.target>
                 <jib.user>loicmdivad</jib.user>
                 <jib.pass>${dockerhub.password}</jib.pass>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
 
     </profiles>
