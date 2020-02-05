@@ -60,7 +60,7 @@ jobs:
       - name: Maven Release Perform
         working-directory: ./docker-actions/
         run: |
-          ./mvnw -B -s ../settings.xml -Darguments="-DskipTests" release:perform jib:build@jib-github jib:build@jib-gcr
+          ./mvnw -B -s ../settings.xml -Darguments="-DskipTests" release:perform jib:build@jib-gcr
 
       - name: Checkout CCloud Registry Actions Master
         uses: actions/checkout@v1
