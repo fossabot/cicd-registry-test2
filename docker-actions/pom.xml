@@ -171,6 +171,9 @@
                 <jib.user>loicmdivad</jib.user>
                 <jib.pass>${dockerhub.password}</jib.pass>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
 
     </profiles>
