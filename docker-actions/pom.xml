@@ -292,7 +292,7 @@
                 <configuration>
                     <to>
                         <auth>
-                            <username>${jib.pass}</username>
+                            <username>${jib.user}</username>
                             <password>${jib.pass}</password>
                         </auth>
                         <image>${jib.target}</image>
