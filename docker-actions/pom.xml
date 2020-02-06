@@ -165,7 +165,7 @@
             </activation>
         </profile>
         <profile>
-            <id>gcr</id>
+            <id>gcr-repo</id>
             <properties>
                 <jib.target>gcr.io/loicmdivad/cicd-registry-test2</jib.target>
                 <jib.user>_json_key</jib.user>
