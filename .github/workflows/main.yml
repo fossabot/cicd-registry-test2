@@ -54,7 +54,6 @@ jobs:
       - name: Maven Deploy Docker Image (Docker Hub)
         working-directory: ./docker-actions/
         run: |
-          cat ~/.docker/config.json
-          rm -r ~/.docker/config.json
+          cat ../settings.xml
           ./mvnw -B -s ../settings.xml -DskipTests jib:build -Pgcr-repo
 
