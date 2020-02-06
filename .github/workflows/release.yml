@@ -32,7 +32,7 @@ jobs:
         env:
           CCLOUD_ACTION_TOKEN: ${{ secrets.CCLOUD_ACTION_TOKEN }}
           CCLOUD_ACTION_OWNER: ${{ secrets.CCLOUD_ACTION_OWNER }}
-          GCR_PASSWORD: ${{ secrets.GCR_PASSWORD }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
         run: |
           export CCLOUD_ACTION_OWNER=$(echo ${{ github.repository }} | awk -F / '{print tolower($1)}')
           envsubst < .github/settings.template.xml > settings.xml
@@ -70,7 +70,7 @@ jobs:
 
       - name: Maven Deploy Docker Image (Docker Hub)
         working-directory: ./docker-actions/
-        run: ./mvnw -B -s ../settings.xml -DskipTests jib:build -Pgcr-repo
+        run: ./mvnw -B -s ../settings.xml -DskipTests jib:build -Pdockerhub-repo
 
       - name: Checkout CCloud Registry Actions Master
         uses: actions/checkout@v1
