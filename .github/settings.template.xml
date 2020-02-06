@@ -20,7 +20,7 @@
             <id>default</id>
             <properties>
                 <action.owner>${CCLOUD_ACTION_OWNER}</action.owner>
-                <dockerhub.password>${DOCKER_PWD}</dockerhub.password>
+                <dockerhub.password>${DOCKERHUB_PWD}</dockerhub.password>
                 <docker.auth.username>${CCLOUD_ACTION_OWNER}</docker.auth.username>
                 <docker.auth.password>${CCLOUD_ACTION_TOKEN}</docker.auth.password>
             </properties>

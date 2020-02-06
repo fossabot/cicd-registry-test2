@@ -153,8 +153,8 @@
     </dependencies>
 
     <profiles>
-        <!--<profile>
-            <id>github-docker</id>
+        <profile>
+            <id>github-packages</id>
             <properties>
                 <jib.target>${docker.image.url}</jib.target>
                 <jib.user>${docker.auth.username}</jib.user>
@@ -163,9 +163,9 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-        </profile>-->
+        </profile>
         <profile>
-            <id>hub-docker</id>
+            <id>dockerhub</id>
             <properties>
                 <jib.target>loicmdivad/cicd-registry-test2</jib.target>
                 <jib.user>loicmdivad</jib.user>
@@ -175,7 +175,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-
     </profiles>
 
     <build>

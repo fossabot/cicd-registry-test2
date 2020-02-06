@@ -17,6 +17,8 @@ jobs:
       - name: Maven settings configuration
         env:
           CCLOUD_ACTION_TOKEN: ${{ secrets.CCLOUD_ACTION_TOKEN }}
+          CCLOUD_ACTION_OWNER: ${{ secrets.CCLOUD_ACTION_OWNER }}
+          DOCKERHUB_PWD: ${{ secrets.DOCKERHUB_PWD }}
         run: |
           export CCLOUD_ACTION_OWNER=$(echo ${{ github.repository }} | awk -F / '{print tolower($1)}')
           envsubst < .github/settings.template.xml > settings.xml
@@ -45,6 +47,11 @@ jobs:
         working-directory: ./docker-actions/
         run: ./mvnw -B -s ../settings.xml -DskipTests deploy
 
-      - name: Maven Deploy Docker Image
+      - name: Maven Deploy Docker Image (Github Packages)
         working-directory: ./docker-actions/
-        run: ./mvnw -B -s ../settings.xml -DskipTests jib:build
+        run: ./mvnw -B -s ../settings.xml -DskipTests jib:build -Pgithub-packages
+
+      - name: Maven Deploy Docker Image (Docker Hub)
+        working-directory: ./docker-actions/
+        run: ./mvnw -B -s ../settings.xml -DskipTests jib:build -Pdockerhub
+
