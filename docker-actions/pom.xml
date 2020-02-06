@@ -168,7 +168,7 @@
             <id>gcr</id>
             <properties>
                 <jib.target>gcr.io/loicmdivad/cicd-registry-test2</jib.target>
-                <jib.user>loicmdivad</jib.user>
+                <jib.user>_json_key</jib.user>
                 <jib.pass>${gcr.password}</jib.pass>
             </properties>
             <activation>
