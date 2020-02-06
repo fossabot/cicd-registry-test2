@@ -18,7 +18,7 @@ jobs:
         env:
           CCLOUD_ACTION_TOKEN: ${{ secrets.CCLOUD_ACTION_TOKEN }}
           CCLOUD_ACTION_OWNER: ${{ secrets.CCLOUD_ACTION_OWNER }}
-          DOCKERHUB_PWD: ${{ secrets.DOCKERHUB_PWD }}
+          GCR_PASSWORD: ${{ secrets.GCR_PASSWORD }}
         run: |
           export CCLOUD_ACTION_OWNER=$(echo ${{ github.repository }} | awk -F / '{print tolower($1)}')
           envsubst < .github/settings.template.xml > settings.xml

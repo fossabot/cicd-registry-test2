@@ -29,7 +29,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <action.owner />
-        <dockerhub.password />
+        <gcr.password />
         <docker.auth.username />
         <docker.auth.password />
         <docker.url>docker.pkg.github.com</docker.url>
@@ -165,11 +165,11 @@
             </activation>
         </profile>
         <profile>
-            <id>dockerhub</id>
+            <id>gcr</id>
             <properties>
-                <jib.target>loicmdivad/cicd-registry-test2</jib.target>
+                <jib.target>gcr.io/loicmdivad/cicd-registry-test2</jib.target>
                 <jib.user>loicmdivad</jib.user>
-                <jib.pass>${dockerhub.password}</jib.pass>
+                <jib.pass>${gcr.password}</jib.pass>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
