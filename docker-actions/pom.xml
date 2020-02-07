@@ -277,8 +277,14 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
                 <configuration>
-                    <preparationGoals>clean verify replacer:replace@version</preparationGoals>
-                    <completionGoals>replacer:replace@unversion</completionGoals>
+                    <preparationGoals>
+                        clean verify replacer:replace@version
+                        scm:checkin@prepare-next-yml
+                    </preparationGoals>
+                    <completionGoals>
+                        replacer:replace@unversion
+                        scm:checkin@prepare-next-yml
+                    </completionGoals>
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
@@ -321,6 +327,34 @@
                                     <value>%VERSION%</value>
                                 </replacement>
                             </replacements>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.11.2</version>
+                <executions>
+                    <execution>
+                        <id>prepare-action-yml</id>
+                        <goals>
+                            <goal>checkin</goal>
+                        </goals>
+                        <configuration>
+                            <message>[maven-scm-plugin] prepare actions.yml release for ${target.version}</message>
+                            <includes>../action.yml</includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-next-yml</id>
+                        <goals>
+                            <goal>checkin</goal>
+                        </goals>
+                        <configuration>
+                            <message>[maven-scm-plugin] prepare actions.yml for next development iteration</message>
+                            <includes>../action.yml</includes>
                         </configuration>
                     </execution>
                 </executions>
