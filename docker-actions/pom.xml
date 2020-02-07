@@ -327,9 +327,6 @@
                 <executions>
                     <execution>
                         <id>version</id>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
                         <configuration>
                             <file>../action.yml</file>
                             <replacements>
@@ -342,9 +339,6 @@
                     </execution>
                     <execution>
                         <id>unversion</id>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
                         <configuration>
                             <file>../action.yml</file>
                             <replacements>
