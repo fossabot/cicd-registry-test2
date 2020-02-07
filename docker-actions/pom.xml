@@ -345,6 +345,7 @@
                         <configuration>
                             <message>[maven-scm-plugin] prepare actions.yml release for ${target.version}</message>
                             <includes>../action.yml</includes>
+                            <pushChanges>false</pushChanges>
                         </configuration>
                     </execution>
                     <execution>
@@ -355,6 +356,7 @@
                         <configuration>
                             <message>[maven-scm-plugin] prepare actions.yml for next development iteration</message>
                             <includes>../action.yml</includes>
+                            <pushChanges>false</pushChanges>
                         </configuration>
                     </execution>
                 </executions>
