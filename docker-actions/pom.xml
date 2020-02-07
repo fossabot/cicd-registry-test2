@@ -257,7 +257,7 @@
                 <configuration>
                     <goals>
                         deploy
-                        jib:build@docker-hub
+                        jib:build@ddockerhub-repo
                         jib:build@github-packages
                     </goals>
                     <preparationGoals>
@@ -355,7 +355,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>docker-hub</id>
+                        <id>dockerhub-repo</id>
                         <configuration>
                             <to>
                                 <auth>
