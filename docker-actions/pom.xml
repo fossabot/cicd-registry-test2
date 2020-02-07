@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.xebia.ldi</groupId>
@@ -28,11 +29,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <action.owner />
-        <target.version />
-        <dockerhub.password />
-        <docker.auth.username />
-        <docker.auth.password />
+        <action.owner/>
+        <target.version/>
+        <dockerhub.password/>
+        <docker.auth.username/>
+        <docker.auth.password/>
         <docker.url>docker.pkg.github.com</docker.url>
         <docker.repo>${action.owner}/cicd-registry-test2</docker.repo>
         <docker.image.name>${project.artifactId}</docker.image.name>
@@ -56,7 +57,7 @@
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 
-        <it.only />
+        <it.only/>
     </properties>
 
     <scm>
@@ -152,31 +153,6 @@
         </dependency>
 
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>github-packages</id>
-            <properties>
-                <jib.target>${docker.image.url}</jib.target>
-                <jib.user>${docker.auth.username}</jib.user>
-                <jib.pass>${docker.auth.password}</jib.pass>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>dockerhub-repo</id>
-            <properties>
-                <jib.target>loicmdivad/cicd-registry-test2</jib.target>
-                <jib.user>loicmdivad</jib.user>
-                <jib.pass>${dockerhub.password}</jib.pass>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
 
     <build>
 
@@ -279,6 +255,11 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
                 <configuration>
+                    <goals>
+                        deploy
+                        jib:build@docker-hub
+                        jib:build@github-packages
+                    </goals>
                     <preparationGoals>
                         clean verify
                         replacer:replace@version
@@ -356,19 +337,40 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib.plugin.version}</version>
-                <configuration>
-                    <to>
-                        <auth>
-                            <username>${jib.user}</username>
-                            <password>${jib.pass}</password>
-                        </auth>
-                        <image>${jib.target}</image>
-                        <tags>
-                            <tag>latest</tag>
-                            <tag>${project.version}</tag>
-                        </tags>
-                    </to>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>github-packages</id>
+                        <configuration>
+                            <to>
+                                <auth>
+                                    <username>${docker.auth.username}</username>
+                                    <password>${docker.auth.password}</password>
+                                </auth>
+                                <image>${docker.image.url}</image>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                            </to>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>docker-hub</id>
+                        <configuration>
+                            <to>
+                                <auth>
+                                    <username>loicmdivad</username>
+                                    <password>${dockerhub.password}</password>
+                                </auth>
+                                <image>loicmdivad/cicd-registry-test2</image>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                            </to>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
