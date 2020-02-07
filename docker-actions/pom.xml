@@ -179,6 +179,7 @@
     </profiles>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -213,6 +214,7 @@
                     </execution>
                 </executions>
             </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -278,10 +280,13 @@
                 <version>${maven-release-plugin.version}</version>
                 <configuration>
                     <preparationGoals>
-                        clean verify replacer:replace@version
+                        clean verify
+                        replacer:replace@version
+                        scm:checkin@commit-prepare
                     </preparationGoals>
                     <completionGoals>
                         replacer:replace@unversion
+                        scm:checkin@commit-perform
                     </completionGoals>
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
@@ -290,6 +295,29 @@
                         <checkModificationExclude>**</checkModificationExclude>
                     </checkModificationExcludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.11.2</version>
+                <executions>
+                    <execution>
+                        <id>commit-prepare</id>
+                        <configuration>
+                            <pushChanges>false</pushChanges>
+                            <message>[maven-release-plugin] prepare release ${project.version}</message>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>commit-perform</id>
+                        <configuration>
+                            <pushChanges>false</pushChanges>
+                            <message>[maven-release-plugin] prepare for next development iteration</message>
+                        </configuration>
+                    </execution>
+                </executions>
+
             </plugin>
 
             <plugin>
@@ -321,22 +349,13 @@
                             <file>../action.yml</file>
                             <replacements>
                                 <replacement>
-                                    <token>v${target.version}</token>
+                                    <token>${target.version}</token>
                                     <value>%VERSION%</value>
                                 </replacement>
                             </replacements>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-scm-plugin</artifactId>
-                <version>1.11.2</version>
-                <configuration>
-                    <includes>../action.yml</includes>
-                </configuration>
             </plugin>
 
             <plugin>
